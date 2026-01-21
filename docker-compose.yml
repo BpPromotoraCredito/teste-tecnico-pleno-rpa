@@ -1,0 +1,26 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: docker/api.dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      - hockey
+      - oscar
+
+  hockey:
+    build:
+      context: .
+      dockerfile: docker/hockey.dockerfile
+    volumes:
+      - ./data:/app/data
+
+  oscar:
+    build:
+      context: .
+      dockerfile: docker/oscar.dockerfile
+    volumes:
+      - ./data:/app/data
