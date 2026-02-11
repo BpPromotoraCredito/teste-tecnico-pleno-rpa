@@ -2,22 +2,41 @@
 
 ## Contexto
 
-Você foi contratado para desenvolver um sistema de coleta de dados que extrai informações de uma fonte web e as disponibiliza via API REST.
+Você foi contratado para desenvolver um sistema de coleta de dados que extrai informações de duas fontes web distintas e as disponibiliza via API REST.
 
 ## Objetivo
 
 Construir uma aplicação que:
 
-1. Colete dados do site Oscar Winning Films
+1. Colete dados de dois sites distintos
 2. Exponha os resultados via API REST
 3. Persista os dados coletados em arquivos estruturados (JSON)
 4. Utilize paralelismo para otimizar a coleta
 
 ---
 
-## Site Alvo
+## Sites Alvo
 
-### Oscar Winning Films
+### 1. Hockey Teams
+
+**URL:** https://www.scrapethissite.com/pages/forms/
+
+**Características:** Página HTML com paginação tradicional
+
+**Dados a coletar:**
+- Team Name
+- Year
+- Wins
+- Losses
+- OT Losses (pode ser nulo)
+- Win %
+- Goals For (GF)
+- Goals Against (GA)
+- Goal Difference (+/-)
+
+---
+
+### 2. Oscar Winning Films
 
 **URL:** https://www.scrapethissite.com/pages/ajax-javascript/
 
@@ -38,7 +57,7 @@ Construir uma aplicação que:
 | Requisito | Descrição |
 |-----------|-----------|
 | **Selenium** | Deve estar disponível para automação quando necessário |
-| **asyncio** | Implementar paralelismo com asyncio para otimizar a coleta |
+| **Paralelismo** | Implementar execução paralela das coletas (threads, multiprocessing ou async) |
 | **Pydantic** | Validar e tipar todos os dados coletados com Pydantic models |
 | **FastAPI** | Expor endpoints REST para trigger e consulta |
 | **Persistência** | Salvar resultados em arquivos JSON no volume `./data` |
@@ -46,7 +65,9 @@ Construir uma aplicação que:
 ### Endpoints da API
 
 ```
+POST /crawl/hockey     → Executa coleta do Hockey Teams
 POST /crawl/oscar      → Executa coleta do Oscar Films
+POST /crawl/all        → Executa ambas as coletas em paralelo
 GET  /results/{job_id} → Retorna resultados de um job
 ```
 
@@ -56,10 +77,10 @@ GET  /results/{job_id} → Retorna resultados de um job
 
 | Critério | Peso |
 |----------|------|
-| **Análise e estratégia** | Alto - Escolha inteligente da abordagem de coleta |
+| **Análise e estratégia** | Alto - Escolha inteligente da abordagem de coleta para cada fonte |
 | **Qualidade do código** | Alto - Organização, legibilidade, boas práticas |
 | **Funcionamento** | Alto - A solução deve funcionar corretamente |
-| **Uso adequado das ferramentas** | Médio - Selenium, asyncio, Pydantic, FastAPI |
+| **Uso adequado das ferramentas** | Médio - Selenium, Pydantic, FastAPI |
 | **Tratamento de erros** | Médio - Robustez e resiliência |
 | **Documentação** | Baixo |
 
@@ -119,7 +140,7 @@ Commite o `flake.lock` no seu repositório.
 ## Regras
 
 1. **Entrega:** Fork deste repositório
-2. **Dúvidas:** Envie por email - ti@bpcreditos.com.br | gabrielpelizzaro@gmail.com ou entre em contato no whatsapp do Gabriel
+2. **Dúvidas:** ti@bpcreditos.com.br | gabrielpelizzaro@gmail.com
 
 ---
 
